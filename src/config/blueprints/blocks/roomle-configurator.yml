@@ -1,0 +1,162 @@
+name:
+  en: Roomle Configurator
+  de: Roomle-Konfigurator
+icon: roomle
+label:
+  en: "{{ mainproductid }} · {{ variants.length }} variant(s)"
+  de: "{{ mainproductid }} · {{ variants.length }} Variante(n)"
+tabs:
+  products:
+    label:
+      en: Products
+      de: Produkte
+    fields:
+      mainProductId:
+        label:
+          en: Main product ID
+          de: Hauptprodukt-ID
+        type: text
+        counter: false
+        required: true
+      variants:
+        label:
+          en: Variants
+          de: Varianten
+        type: structure
+        columns:
+          productId:
+            mobile: true
+          title:
+            mobile: true
+          subtitle:
+          image:
+        empty:
+          en: No variants yet
+          de: Noch keine Varianten
+        fields:
+          productId:
+            label:
+              en: Product ID
+              de: Produkt-ID
+            type: text
+            counter: false
+            required: true
+          title:
+            label:
+              en: Title
+              de: Titel
+            type: text
+            required: true
+          subtitle:
+            label:
+              en: Subtitle
+              de: Untertitel
+            type: text
+          image:
+            label:
+              en: Image
+              de: Bild
+            type: files
+            empty:
+              en: No custom image yet, uses rendering of the product
+              de: Noch kein eigenes Bild, verwendet Rendering des Produkts
+            multiple: false
+            query: page.images
+  settings:
+    label:
+      en: Settings
+      de: Einstellungen
+    fields:
+      info:
+        label: false
+        type: info
+        text:
+          en: These settings override the global default settings. Only change them if needed.
+          de: Diese Einstellungen haben Vorrang vor den globalen Standard-Einstellungen. Verändere sie nur wenn nötig.
+      useConfiguratorId:
+        label:
+          en: Configurator ID
+          de: Konfigurator-ID
+        type: toggles
+        default: default
+        grow: false
+        options:
+          -
+            text:
+              en: Default
+              de: Standard
+            value: default
+          -
+            text:
+              en: Custom
+              de: Eigene
+            value: custom
+        required: true
+        width: 1/3
+      gap:
+        type: gap
+        when:
+          useConfiguratorId: default
+        width: 2/3
+      configuratorId:
+        label:
+          en: Custom configurator ID
+          de: Eigene Konfigurator-ID
+        type: text
+        counter: false
+        required: true
+        when:
+          useConfiguratorId: custom
+        width: 2/3
+      useTarget:
+        label:
+          en: Request target page
+          de: Anfrage-Zielseite
+        type: toggles
+        default: default
+        grow: false
+        options:
+          -
+            text:
+              en: Default
+              de: Standard
+            value: default
+          -
+            text:
+              en: Custom
+              de: Eigene
+            value: custom
+          -
+            icon: cancel
+            text:
+              en: None
+              de: Keine
+            value: none
+        required: true
+        width: 1/3
+      target:
+        label:
+          en: Custom target page
+          de: Eigene Zielseite
+        type: pages
+        empty:
+          en: No custom target page yet
+          de: Noch keine eigene Zielseite
+        multiple: false
+        required: true
+        when:
+          useTarget: custom
+        width: 2/3
+      options:
+        label:
+          en: Configurator options
+          de: Konfigurator-Optionen
+        type: textarea
+        buttons: false
+        counter: false
+        font: monospace
+        help:
+          en: Overrides for the <a href="https://docs.roomle.com/web/embedding/api/interfaces/types.UiInitData.html">Roomle configurator options</a> in YAML syntax
+          de: Ergänzende <a href="https://docs.roomle.com/web/embedding/api/interfaces/types.UiInitData.html">Roomle Konfigurator-Optionen</a> in YAML-Syntax
+        size: medium
+        spellcheck: false

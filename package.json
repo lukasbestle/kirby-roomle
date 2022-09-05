@@ -1,0 +1,22 @@
+{
+	"scripts": {
+		"build": "npm run build:panel && npm run build:public",
+		"build:panel": "kirbyup src/frontend/index.js",
+		"build:public": "esbuild src/frontend/public/*.js --outdir=assets --minify --bundle --splitting --format=esm --target=es6",
+		"dev:panel": "kirbyup src/frontend/index.js --watch",
+		"lint": "eslint --ext js,vue src/frontend",
+		"format": "prettier --write \"src/frontend/**/*.{js,vue}\""
+	},
+	"dependencies": {
+		"@roomle/embedding-lib": "^4.41.0"
+	},
+	"devDependencies": {
+		"esbuild": "^0.15.6",
+		"eslint": "^8.16.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-vue": "^9.0.1",
+		"kirbyup": "^2.0.0",
+		"prettier": "^2.6.2"
+	},
+	"browserslist": "> 2%"
+}
