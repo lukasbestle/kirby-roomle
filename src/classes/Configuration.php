@@ -8,6 +8,7 @@ use Kirby\Exception\InvalidArgumentException;
 use Kirby\Image\Image;
 use Kirby\Toolkit\Collection;
 use Kirby\Toolkit\Obj;
+use Kirby\Toolkit\Str;
 use NumberFormatter;
 
 /**
@@ -115,6 +116,22 @@ class Configuration extends Obj
 		// TODO: Remove suppression comment when support for Kirby 3.7.x is dropped
 		/** @psalm-suppress InternalMethod */
 		return App::instance()->snippet('roomle/configuration', ['configuration' => $this], true);
+	}
+
+	/**
+	 * Returns the deeplink to the configurator
+	 * where this configuration was created
+	 * if the URL is valid
+	 */
+	public function configuratorUrl(): string|null
+	{
+		$homeUrl = App::instance()->url('index');
+
+		if ($homeUrl && Str::startsWith($this->configuratorUrl, $homeUrl) === true) {
+			return $this->configuratorUrl;
+		}
+
+		return null;
 	}
 
 	/**

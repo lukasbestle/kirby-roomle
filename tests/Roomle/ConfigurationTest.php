@@ -17,10 +17,37 @@ class ConfigurationTest extends TestCase
 				'body' => [
 					'roomle-configuration' => '{"depth": 123}'
 				]
+			],
+			'urls' => [
+				'index' => 'https://example.com'
 			]
 		]);
 
 		locale_set_default('en_US');
+	}
+
+	/**
+	 * @covers ::configuratorUrl
+	 */
+	public function testConfiguratorUrl()
+	{
+		$configuration = new Configuration([
+			'configuratorUrl' => $url = 'https://example.com/configurator?roomle-id=some:product#roomle-id'
+		]);
+
+		$this->assertSame($url, $configuration->configuratorUrl());
+	}
+
+	/**
+	 * @covers ::configuratorUrl
+	 */
+	public function testConfiguratorUrl_Invalid()
+	{
+		$configuration = new Configuration([
+			'configuratorUrl' => 'https://malicious.com/configurator?roomle-id=some:product#roomle-id'
+		]);
+
+		$this->assertNull($configuration->configuratorUrl());
 	}
 
 	/**

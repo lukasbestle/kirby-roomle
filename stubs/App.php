@@ -19,4 +19,11 @@ class App
 	public function snippet($name, $data = [], bool $return = true): string|null
 	{
 	}
+
+	/**
+	 * @psalm-return ($object is false ? string|null : \Kirby\Http\Uri)
+	 */
+	public function url(string $type = 'index', bool $object = false)
+	{
+	}
 }
