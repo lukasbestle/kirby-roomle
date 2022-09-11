@@ -41,6 +41,7 @@ F::loadClasses([
 	'LukasBestle\Roomle\Parameter'           => __DIR__ . '/src/classes/Parameter.php',
 	'LukasBestle\Roomle\Parameters'          => __DIR__ . '/src/classes/Parameters.php',
 	'LukasBestle\Roomle\Part'                => __DIR__ . '/src/classes/Part.php',
+	'LukasBestle\Roomle\Size'                => __DIR__ . '/src/classes/Size.php',
 ]);
 
 // register the plugin

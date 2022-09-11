@@ -9,7 +9,6 @@ use Kirby\Image\Image;
 use Kirby\Toolkit\Collection;
 use Kirby\Toolkit\Obj;
 use Kirby\Toolkit\Str;
-use NumberFormatter;
 
 /**
  * Configuration
@@ -135,41 +134,6 @@ class Configuration extends Obj
 	}
 
 	/**
-	 * Returns the depth of the configured product
-	 * as a human-readable string in cm
-	 */
-	public function depthLabel(): string
-	{
-		return static::formatLength($this->depth);
-	}
-
-	/**
-	 * Formats a length in millimeters as a
-	 * human-readable string in cm
-	 * @internal
-	 */
-	public static function formatLength(int $millimeters): string
-	{
-		$centimeters = $millimeters / 10;
-
-		if (class_exists(NumberFormatter::class) === true) {
-			$formatter = new NumberFormatter(locale_get_default(), NumberFormatter::DECIMAL);
-			return $formatter->format($centimeters) . ' cm';
-		}
-
-		return $centimeters . ' cm'; // @codeCoverageIgnore
-	}
-
-	/**
-	 * Returns the height of the configured product
-	 * as a human-readable string in cm
-	 */
-	public function heightLabel(): string
-	{
-		return static::formatLength($this->height);
-	}
-
-	/**
 	 * Creates an instance if data is available
 	 * (either from the argument or the request)
 	 *
@@ -223,19 +187,22 @@ class Configuration extends Obj
 	}
 
 	/**
+	 * Returns a size object for the configuration
+	 */
+	public function size(): Size
+	{
+		return new Size([
+			'depth'  => $this->depth,
+			'height' => $this->height,
+			'width'  => $this->width,
+		]);
+	}
+
+	/**
 	 * Returns the image of a top view of the configured product
 	 */
 	public function topImage(): Image
 	{
 		return new Image(['url' => $this->topImage]);
-	}
-
-	/**
-	 * Returns the width of the configured product
-	 * as a human-readable string in cm
-	 */
-	public function widthLabel(): string
-	{
-		return static::formatLength($this->width);
 	}
 }

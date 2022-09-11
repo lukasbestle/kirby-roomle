@@ -109,4 +109,25 @@ class Part extends Obj
 
 		return new Parameters($parameters);
 	}
+
+	/**
+	 * Returns a size object for the part
+	 */
+	public function size(): Size
+	{
+		$parameters = $this->parameters();
+
+		$data = [];
+		foreach (['depth', 'height', 'width'] as $parameter) {
+			$value = $parameters->get($parameter)?->value();
+
+			if (is_float($value) !== true) {
+				throw new InvalidArgumentException('Invalid ' . $parameter . ' value');
+			}
+
+			$data[$parameter] = (int)$value;
+		}
+
+		return new Size($data);
+	}
 }

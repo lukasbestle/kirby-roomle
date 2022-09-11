@@ -54,18 +54,18 @@ class PartTest extends TestCase
 		$part = new Part([
 			'parameters' => [
 				[
-					'key'        => 'height',
-					'label'      => 'Height',
-					'type'       => 'Decimal',
-					'unitType'   => 'length',
-					'value'      => '123.0'
+					'key'      => 'height',
+					'label'    => 'Height',
+					'type'     => 'Decimal',
+					'unitType' => 'length',
+					'value'    => '123.0'
 				],
 				[
-					'key'        => 'width',
-					'label'      => 'Width',
-					'type'       => 'Decimal',
-					'unitType'   => 'length',
-					'value'      => '456.0'
+					'key'      => 'width',
+					'label'    => 'Width',
+					'type'     => 'Decimal',
+					'unitType' => 'length',
+					'value'    => '456.0'
 				]
 			]
 		]);
@@ -115,6 +115,71 @@ class PartTest extends TestCase
 	}
 
 	/**
+	 * @covers ::size
+	 */
+	public function testSize()
+	{
+		$configuration = new Part([
+			'parameters' => [
+				[
+					'key'      => 'depth',
+					'label'    => 'Depth',
+					'type'     => 'Decimal',
+					'unitType' => 'length',
+					'value'    => '123.0'
+				],
+				[
+					'key'      => 'height',
+					'label'    => 'Height',
+					'type'     => 'Decimal',
+					'unitType' => 'length',
+					'value'    => '456.0'
+				],
+				[
+					'key'      => 'width',
+					'label'    => 'Width',
+					'type'     => 'Decimal',
+					'unitType' => 'length',
+					'value'    => '789.0'
+				]
+			]
+		]);
+
+		$this->assertSame('W 78.9 cm / H 45.6 cm / D 12.3 cm', (string)$configuration->size());
+		$this->assertSame('78.9 cm', $configuration->size()->widthLabel());
+	}
+
+	/**
+	 * @covers ::size
+	 */
+	public function testSize_Invalid()
+	{
+		$this->expectException('Kirby\Exception\InvalidArgumentException');
+		$this->expectExceptionMessage('Invalid width value');
+
+		$part = new Part([
+			'parameters' => [
+				[
+					'key'      => 'depth',
+					'label'    => 'Depth',
+					'type'     => 'Decimal',
+					'unitType' => 'length',
+					'value'    => '123.0'
+				],
+				[
+					'key'      => 'height',
+					'label'    => 'Height',
+					'type'     => 'Decimal',
+					'unitType' => 'length',
+					'value'    => '456.0'
+				]
+			]
+		]);
+
+		$part->size();
+	}
+
+	/**
 	 * @covers ::__toString
 	 */
 	public function testToString()
@@ -126,18 +191,18 @@ class PartTest extends TestCase
 			'label'       => 'Some part',
 			'parameters'  => [
 				[
-					'key'        => 'height',
-					'label'      => 'Height',
-					'type'       => 'Decimal',
-					'unitType'   => 'length',
-					'value'      => '123.0'
+					'key'      => 'height',
+					'label'    => 'Height',
+					'type'     => 'Decimal',
+					'unitType' => 'length',
+					'value'    => '123.0'
 				],
 				[
-					'key'        => 'width',
-					'label'      => 'Width',
-					'type'       => 'Decimal',
-					'unitType'   => 'length',
-					'value'      => '456.0'
+					'key'      => 'width',
+					'label'    => 'Width',
+					'type'     => 'Decimal',
+					'unitType' => 'length',
+					'value'    => '456.0'
 				]
 			]
 		]);

@@ -125,36 +125,6 @@ class ConfigurationTest extends TestCase
 	}
 
 	/**
-	 * @covers ::formatLength
-	 */
-	public function testFormatLength()
-	{
-		$this->assertSame('0.1 cm', Configuration::formatLength(1));
-		$this->assertSame('1 cm', Configuration::formatLength(10));
-		$this->assertSame('1.3 cm', Configuration::formatLength(13));
-		$this->assertSame('123.4 cm', Configuration::formatLength(1234));
-		$this->assertSame('1,234.5 cm', Configuration::formatLength(12345));
-	}
-
-	/**
-	 * @covers ::depthLabel
-	 * @covers ::heightLabel
-	 * @covers ::widthLabel
-	 */
-	public function testLengthLabels()
-	{
-		$configuration = new Configuration([
-			'depth'  => 12345,
-			'height' => 34567,
-			'width'  => 56789
-		]);
-
-		$this->assertSame('1,234.5 cm', $configuration->depthLabel());
-		$this->assertSame('3,456.7 cm', $configuration->heightLabel());
-		$this->assertSame('5,678.9 cm', $configuration->widthLabel());
-	}
-
-	/**
 	 * @covers ::parts
 	 */
 	public function testParts()
@@ -229,6 +199,21 @@ class ConfigurationTest extends TestCase
 		$this->assertNull($image->root());
 		$this->assertSame($url, $image->url());
 		$this->assertSame('<img alt="" src="' . $url . '">', $image->html());
+	}
+
+	/**
+	 * @covers ::size
+	 */
+	public function testSize()
+	{
+		$configuration = new Configuration([
+			'depth'  => 12345,
+			'height' => 34567,
+			'width'  => 56789
+		]);
+
+		$this->assertSame('W 5,678.9 cm / H 3,456.7 cm / D 1,234.5 cm', (string)$configuration->size());
+		$this->assertSame('5,678.9 cm', $configuration->size()->widthLabel());
 	}
 
 	/**

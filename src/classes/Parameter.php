@@ -99,7 +99,7 @@ class Parameter extends Obj
 			/** @var float $value */
 			$value = $this->value();
 
-			return Configuration::formatLength((int)$value);
+			return Size::formatLength((int)$value);
 		}
 
 		return $this->valueLabel ?? $this->value;
