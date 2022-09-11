@@ -6,7 +6,7 @@
 [![CI Status](https://img.shields.io/github/workflow/status/lukasbestle/kirby-roomle/CI?label=CI)](https://github.com/lukasbestle/kirby-roomle/actions?query=workflow%3ACI)
 [![Coverage Status](https://img.shields.io/codecov/c/gh/lukasbestle/kirby-roomle?token=IBYEIB22SM)](https://codecov.io/gh/lukasbestle/kirby-roomle)
 
-> Block to embed the [Roomle 3D Configurator](https://www.roomle.com/en/configurator) into your Kirby site
+> Block plugin to embed the [Roomle 3D Configurator](https://www.roomle.com/en/configurator) into your Kirby site
 
 ![Screenshot of the Roomle block in the Kirby Panel](screenshot.png)
 
