@@ -162,17 +162,7 @@ class Configuration extends Obj
 				throw new InvalidArgumentException('Invalid part ' . $num);
 			}
 
-			$part = new Part($part);
-
-			// double-check uninitialized property before access (normally should not happen);
-			// the Psalm error is suppressed because Psalm assumes all props to be
-			// initialized in the `Part` constructor (which `Obj` does not ensure)
-			/** @psalm-suppress TypeDoesNotContainType */
-			if (isset($part->componentId) !== true) {
-				throw new InvalidArgumentException('Part ' . $num . ' does not have a component ID');
-			}
-
-			$parts[$part->componentId] = $part;
+			$parts[] = new Part($part);
 		}
 
 		return new Collection($parts);

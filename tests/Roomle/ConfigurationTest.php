@@ -136,6 +136,10 @@ class ConfigurationTest extends TestCase
 					'label'       => 'Some component 1'
 				],
 				[
+					'componentId' => 'some:component1',
+					'label'       => 'Some component 1 with different properties'
+				],
+				[
 					'componentId' => 'some:component2',
 					'label'       => 'Some component 2'
 				]
@@ -144,8 +148,8 @@ class ConfigurationTest extends TestCase
 
 		$parts = $configuration->parts();
 
-		$this->assertSame(2, $parts->count());
-		$this->assertSame(['some:component1', 'some:component2'], $parts->keys());
+		$this->assertSame(3, $parts->count());
+		$this->assertSame(['some:component1', 'some:component1', 'some:component2'], $parts->pluck('componentId'));
 		$this->assertInstanceOf(Part::class, $parts->first());
 		$this->assertSame('Some component 1', $parts->first()->label());
 	}
@@ -153,7 +157,7 @@ class ConfigurationTest extends TestCase
 	/**
 	 * @covers ::parts
 	 */
-	public function testParts_Invalid1()
+	public function testParts_Invalid()
 	{
 		$this->expectException('Kirby\Exception\InvalidArgumentException');
 		$this->expectExceptionMessage('Invalid part 0');
@@ -161,25 +165,6 @@ class ConfigurationTest extends TestCase
 		$configuration = new Configuration([
 			'parts' => [
 				'not an array'
-			]
-		]);
-
-		$configuration->parts();
-	}
-
-	/**
-	 * @covers ::parts
-	 */
-	public function testParts_Invalid2()
-	{
-		$this->expectException('Kirby\Exception\InvalidArgumentException');
-		$this->expectExceptionMessage('Part 0 does not have a component ID');
-
-		$configuration = new Configuration([
-			'parts' => [
-				[
-					'label' => 'Some part without component ID'
-				]
 			]
 		]);
 
