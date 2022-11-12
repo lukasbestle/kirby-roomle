@@ -12,7 +12,7 @@
 
 ## Support my work
 
-> The Roomle plugin is completely free and published under the terms of the MIT license. I do not sell licenses or accept donations, but I'm available for contract work regarding feature development for this plugin.
+> The Roomle plugin is completely free and published under the terms of the MIT license. I do not sell licenses or accept donations, but I'm available for contract work regarding feature development for this plugin.  
 > ➯ [Read more…](.github/CONTRIBUTING.md#monetary-support)
 
 ## About this plugin
