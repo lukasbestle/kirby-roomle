@@ -222,11 +222,6 @@ class ConfiguratorBlockTest extends TestCase
 			'configuratorId' => 'defaultConfigurator',
 			'htmlId' => 'roomle-12345678-90ab-cdef-1234-567890abcdef',
 			'options' => [
-				'deeplink' => (
-					'https://example.com/test' .
-					'?roomle-12345678-90ab-cdef-1234-567890abcdef=#CONFIGURATIONID#' .
-					'#roomle-12345678-90ab-cdef-1234-567890abcdef'
-				),
 				'some' => 'default',
 				'other' => 'default',
 				'id' => 'some:product',
@@ -257,11 +252,6 @@ class ConfiguratorBlockTest extends TestCase
 			'configuratorId' => 'defaultConfigurator',
 			'htmlId' => 'roomle-12345678-90ab-cdef-1234-567890abcdef',
 			'options' => [
-				'deeplink' => (
-					'https://example.com/test' .
-					'?roomle-12345678-90ab-cdef-1234-567890abcdef=#CONFIGURATIONID#' .
-					'#roomle-12345678-90ab-cdef-1234-567890abcdef'
-				),
 				'some' => 'default',
 				'other' => 'default',
 				'id' => 'some:product',
@@ -403,11 +393,6 @@ class ConfiguratorBlockTest extends TestCase
 		]);
 
 		$this->assertSame([
-			'deeplink' => (
-				'https://example.com/test' .
-				'?roomle-12345678-90ab-cdef-1234-567890abcdef=#CONFIGURATIONID#' .
-				'#roomle-12345678-90ab-cdef-1234-567890abcdef'
-			),
 			'some' => 'default',
 			'other' => 'default',
 			'id' => 'some:product',
@@ -441,11 +426,6 @@ class ConfiguratorBlockTest extends TestCase
 		]);
 
 		$this->assertSame([
-			'deeplink' => (
-				'https://example.com/de/test' .
-				'?roomle-12345678-90ab-cdef-1234-567890abcdef=#CONFIGURATIONID#' .
-				'#roomle-12345678-90ab-cdef-1234-567890abcdef'
-			),
 			'locale' => 'de',
 			'some' => 'default',
 			'other' => 'default',
@@ -480,11 +460,6 @@ class ConfiguratorBlockTest extends TestCase
 		]);
 
 		$this->assertSame([
-			'deeplink' => (
-				'https://example.com/de-at/test' .
-				'?roomle-12345678-90ab-cdef-1234-567890abcdef=#CONFIGURATIONID#' .
-				'#roomle-12345678-90ab-cdef-1234-567890abcdef'
-			),
 			'locale' => 'de',
 			'overrideCountry' => 'at',
 			'some' => 'default',
@@ -535,11 +510,6 @@ class ConfiguratorBlockTest extends TestCase
 		]);
 
 		$this->assertSame([
-			'deeplink' => (
-				'https://example.com/test' .
-				'?roomle-12345678-90ab-cdef-1234-567890abcdef=#CONFIGURATIONID#' .
-				'#roomle-12345678-90ab-cdef-1234-567890abcdef'
-			),
 			'buttons' => [
 				'requestproduct' => false
 			],
@@ -568,11 +538,6 @@ class ConfiguratorBlockTest extends TestCase
 		]);
 
 		$this->assertSame([
-			'deeplink' => (
-				'https://example.com/test' .
-				'?roomle-12345678-90ab-cdef-1234-567890abcdef=#CONFIGURATIONID#' .
-				'#roomle-12345678-90ab-cdef-1234-567890abcdef'
-			),
 			'some' => 'custom value',
 			'other' => 'default',
 			'skin' => [

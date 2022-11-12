@@ -46,6 +46,13 @@ export default class {
 		const options = this.props.options;
 		options.id = this.currentId;
 
+		// define the deeplink based on the current URL;
+		// use an intermediate placeholder to avoid that the `#` chars get escaped
+		options.deeplink = this.idToUrl(
+			this.props.htmlId + "-PLACEHOLDER",
+			true
+		).href.replace(this.props.htmlId + "-PLACEHOLDER", "#CONFIGURATIONID#");
+
 		// initialize the configured or passed product
 		this.configurator = await RoomleConfiguratorApi.createConfigurator(
 			this.props.configuratorId,

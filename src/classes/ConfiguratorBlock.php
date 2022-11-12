@@ -114,14 +114,6 @@ class ConfiguratorBlock extends Block
 	{
 		$defaults = [];
 
-		// URL template for the configurator URL;
-		// the #CONFIGURATIONID# placeholder is dynamically replaced by Roomle
-		$defaults['deeplink'] = (
-			$this->parent()->url() .
-			'?' . $this->htmlId() . '=#CONFIGURATIONID#' .
-			'#' . $this->htmlId()
-		);
-
 		// locale settings from the site's language code
 		$language = $this->kirby()->language();
 		if ($language !== null) {
