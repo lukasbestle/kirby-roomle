@@ -3,7 +3,7 @@
 [![Kirby 3.7.0+](https://img.shields.io/badge/Kirby-3.7.0%2B-green)](https://getkirby.com)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 [![Release](https://img.shields.io/github/v/release/lukasbestle/kirby-roomle)](https://github.com/lukasbestle/kirby-roomle/releases/latest)
-[![CI Status](https://img.shields.io/github/workflow/status/lukasbestle/kirby-roomle/CI?label=CI)](https://github.com/lukasbestle/kirby-roomle/actions?query=workflow%3ACI)
+[![CI Status](https://img.shields.io/github/actions/workflow/status/lukasbestle/kirby-roomle/ci.yml?branch=main&label=CI)](https://github.com/lukasbestle/kirby-roomle/actions?query=workflow%3ACI+branch%3Amain)
 [![Coverage Status](https://img.shields.io/codecov/c/gh/lukasbestle/kirby-roomle?token=IBYEIB22SM)](https://codecov.io/gh/lukasbestle/kirby-roomle)
 
 > Block plugin to embed the [Roomle 3D Configurator](https://www.roomle.com/en/configurator) into your Kirby site
