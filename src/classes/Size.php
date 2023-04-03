@@ -40,7 +40,7 @@ class Size extends Obj
 	 */
 	public function __toString(): string
 	{
-		return I18n::template('roomle.size', '', [
+		return I18n::template('roomle.size', null, [
 			'depth'  => $this->depthLabel(),
 			'height' => $this->heightLabel(),
 			'width'  => $this->widthLabel(),
