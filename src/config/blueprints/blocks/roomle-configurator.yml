@@ -17,6 +17,7 @@ tabs:
           de: Hauptprodukt-ID
         type: text
         counter: false
+        icon: box
         required: true
       variants:
         label:
@@ -39,6 +40,7 @@ tabs:
               en: Product ID
               de: Produkt-ID
             type: text
+            icon: box
             counter: false
             required: true
           title:
@@ -47,11 +49,13 @@ tabs:
               de: Titel
             type: text
             required: true
+            width: 1/2
           subtitle:
             label:
               en: Subtitle
               de: Untertitel
             type: text
+            width: 1/2
           image:
             label:
               en: Image
@@ -104,6 +108,7 @@ tabs:
           de: Eigene Konfigurator-ID
         type: text
         counter: false
+        icon: box
         required: true
         when:
           useConfiguratorId: custom
