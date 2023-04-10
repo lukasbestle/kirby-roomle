@@ -127,17 +127,17 @@ class ConfiguratorBlock extends Block
 			}
 		}
 
-		// no point displaying the "request product" button
-		// if no target page was configured
-		if ($this->targetUrl() === null) {
-			$defaults['buttons']['add_to_basket']  = false;
-			$defaults['buttons']['requestproduct'] = false;
-		}
-
 		// assemble the options from the dynamic defaults with
 		// overrides from the config and the block settings
 		$overrides = $this->content()->options()->yaml();
 		$options   = array_merge($defaults, $this->option('options'), $overrides);
+
+		// no point displaying the "request product" button
+		// if no target page was configured
+		if ($this->targetUrl() === null) {
+			$options['buttons']['add_to_basket']  = false;
+			$options['buttons']['requestproduct'] = false;
+		}
 
 		// always set the `id` property from block data
 		$options['id'] = $this->mainProductId();

@@ -510,12 +510,12 @@ class ConfiguratorBlockTest extends TestCase
 		]);
 
 		$this->assertSame([
+			'some' => 'default',
+			'other' => 'default',
 			'buttons' => [
 				'add_to_basket' => false,
 				'requestproduct' => false,
 			],
-			'some' => 'default',
-			'other' => 'default',
 			'id' => 'some:product',
 		], $block->options());
 	}
