@@ -3,7 +3,6 @@
 namespace LukasBestle\Roomle;
 
 use Kirby\Cms\App;
-use Kirby\Data\Json;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Image\Image;
 use Kirby\Toolkit\Collection;
@@ -82,31 +81,6 @@ class Configuration extends Obj
 	public int $width;
 
 	/**
-	 * Constructor
-	 *
-	 * @param array|string|null $data `null` to get the data from the request (`roomle-configuration` param)
-	 *
-	 * @throws \Kirby\Exception\InvalidArgumentException if no configuration data was passed as argument or in the request
-	 * @throws \Kirby\Exception\InvalidArgumentException if the JSON data from the request could not be parsed
-	 */
-	public function __construct(array|string|null $data = null)
-	{
-		if ($data === null) {
-			$data = App::instance()->request()->get('roomle-configuration');
-
-			if (!$data) {
-				throw new InvalidArgumentException('No configuration data passed or available in request');
-			}
-		}
-
-		if (is_string($data) === true) {
-			$data = Json::decode($data);
-		}
-
-		parent::__construct($data);
-	}
-
-	/**
 	 * Returns a plain text representation of the configuration
 	 * e.g. for use in contact forms
 	 */
@@ -141,8 +115,13 @@ class Configuration extends Obj
 	 */
 	public static function lazyInstance(array|string|null $data = null): self|null
 	{
-		try {
+		if (is_array($data) === true) {
 			return new self($data);
+		}
+
+		try {
+			$plan = new Plan($data);
+			return $plan->items()->first();
 		} catch (InvalidArgumentException) {
 			return null;
 		}

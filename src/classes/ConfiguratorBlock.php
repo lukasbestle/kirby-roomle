@@ -22,6 +22,25 @@ use Kirby\Toolkit\Str;
 class ConfiguratorBlock extends Block
 {
 	/**
+	 * Returns the root tag in the Roomle catalog that selects
+	 * all products that can be added in the room configurator (MoC)
+	 */
+	public function catalogRootTag(): string|null
+	{
+		$tag = match ($this->content()->useCatalogRootTag()->value()) {
+			'default' => $this->option('catalogRootTag'),
+			'custom'  => $this->content()->catalogRootTag()->value(),
+			default   => null
+		};
+
+		if (!$tag) {
+			return null;
+		}
+
+		return $tag;
+	}
+
+	/**
 	 * Returns the Roomle configurator ID
 	 *
 	 * @throws \Kirby\Exception\InvalidArgumentException if no configurator ID was configured
@@ -132,15 +151,37 @@ class ConfiguratorBlock extends Block
 		$overrides = $this->content()->options()->yaml();
 		$options   = array_merge($defaults, $this->option('options'), $overrides);
 
-		// no point displaying the "request product" button
+		// no point displaying any of the target buttons
 		// if no target page was configured
 		if ($this->targetUrl() === null) {
 			$options['buttons']['add_to_basket']  = false;
+			$options['buttons']['requestplan']    = false;
 			$options['buttons']['requestproduct'] = false;
 		}
 
 		// always set the `id` property from block data
 		$options['id'] = $this->mainProductId();
+
+		// define options for the multi-object configurator (MoC)
+		if ($this->content()->mode()->value() === 'room') {
+			$options['moc'] = true;
+
+			$initialView = $this->content()->initialView()->value();
+			if (in_array($initialView, ['room', 'catalog']) === true) {
+				$options['startInDetail'] = false;
+				$options['state']['mode'] = $initialView;
+			} else {
+				$options['startInDetail'] = true;
+			}
+
+			$catalogRootTag = $this->catalogRootTag();
+			if ($catalogRootTag !== null) {
+				$options['catalogRootTag'] = $catalogRootTag;
+			}
+		} else {
+			// setting to `false` explicitly overrides the default value in Rubens Admin
+			$options['moc'] = false;
+		}
 
 		return $options;
 	}

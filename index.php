@@ -4,6 +4,7 @@ use Kirby\Cms\App;
 use Kirby\Exception\Exception;
 use Kirby\Filesystem\F;
 use LukasBestle\Roomle\Configuration;
+use LukasBestle\Roomle\Plan;
 
 /**
  * Kirby Roomle Plugin
@@ -41,6 +42,7 @@ F::loadClasses([
 	'LukasBestle\Roomle\Parameter'           => __DIR__ . '/src/classes/Parameter.php',
 	'LukasBestle\Roomle\Parameters'          => __DIR__ . '/src/classes/Parameters.php',
 	'LukasBestle\Roomle\Part'                => __DIR__ . '/src/classes/Part.php',
+	'LukasBestle\Roomle\Plan'                => __DIR__ . '/src/classes/Plan.php',
 	'LukasBestle\Roomle\Size'                => __DIR__ . '/src/classes/Size.php',
 ]);
 
@@ -61,4 +63,14 @@ App::plugin('lukasbestle/roomle', [
 function roomleConfiguration(array|string|null $data = null): Configuration|null
 {
 	return Configuration::lazyInstance($data);
+}
+
+/**
+ * Returns the object for a room configuration
+ *
+ * @param array|string|null $data `null` to get the data from the request (`roomle-configuration` param)
+ */
+function roomlePlan(array|string|null $data = null): Plan|null
+{
+	return Plan::lazyInstance($data);
 }

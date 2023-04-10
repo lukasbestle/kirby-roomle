@@ -6,6 +6,10 @@ return [
 	// REQUIRED (either globally or in the block settings)
 	'configuratorId' => null,
 
+	// Root tag in the Roomle catalog that selects all products
+	// that can be added in the room configurator (MoC)
+	'catalogRootTag' => null,
+
 	// page to redirect to when "request product" is clicked;
 	// defaults to none (request product feature is disabled)
 	'target' => null,

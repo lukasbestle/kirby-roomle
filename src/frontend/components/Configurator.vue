@@ -42,9 +42,9 @@ export default {
 	methods: {
 		/**
 		 * Returns the URL to the perspective image of a
-		 * Roomle configuration or item by Roomle ID
+		 * Roomle configuration, item or plan by Roomle ID
 		 *
-		 * @param {String} id Configuration or item ID
+		 * @param {String} id Configuration, item or plan ID
 		 * @returns {String|null}
 		 */
 		idToImageUrl(id) {
@@ -52,18 +52,26 @@ export default {
 				return null;
 			}
 
-			// more than two colons = configuration, else item
-			if (id.split(":").length > 2) {
-				return (
-					"https://uploads.roomle.com/configurations/" +
-					id +
-					"/perspectiveImage.png"
-				);
+			switch (id.split(":").length) {
+				case 1:
+					// no colons; plan ID
+					return "https://uploads.roomle.com/plans/" + id + "/thumbnail.png";
+				case 2:
+					// one colon; item ID
+					return (
+						"https://www.roomle.com/api/v2/items/" + id + "/perspectiveImageHD"
+					);
+				case 3:
+					// two colons; configuration ID
+					return (
+						"https://uploads.roomle.com/configurations/" +
+						id +
+						"/perspectiveImage.png"
+					);
+				default:
+					// invalid/unknown ID type
+					return null;
 			}
-
-			return (
-				"https://www.roomle.com/api/v2/items/" + id + "/perspectiveImageHD"
-			);
 		},
 
 		/**

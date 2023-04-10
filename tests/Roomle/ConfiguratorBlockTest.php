@@ -20,6 +20,7 @@ class ConfiguratorBlockTest extends TestCase
 			'options' => [
 				'lukasbestle.roomle' => [
 					'configuratorId' => 'defaultConfigurator',
+					'catalogRootTag' => 'default-root-tag',
 					'target'         => 'default-target',
 					'options'        => ['some' => 'default', 'other' => 'default']
 				]
@@ -45,6 +46,83 @@ class ConfiguratorBlockTest extends TestCase
 				'media' => 'https://media.example.com'
 			]
 		]);
+	}
+
+	/**
+	 * @covers ::catalogRootTag
+	 */
+	public function testCatalogRootTag_Custom()
+	{
+		$block = new ConfiguratorBlock([
+			'content' => [
+				'catalogroottag'    => 'custom-root-tag',
+				'usecatalogroottag' => 'custom',
+			],
+			'id'       => '12345678-90ab-cdef-1234-567890abcdef',
+			'isHidden' => false,
+			'parent'   => $this->app->page('test'),
+			'type'     => 'roomle-configurator'
+		]);
+
+		$this->assertSame('custom-root-tag', $block->catalogRootTag());
+	}
+
+	/**
+	 * @covers ::catalogRootTag
+	 */
+	public function testCatalogRootTag_CustomEmpty()
+	{
+		$block = new ConfiguratorBlock([
+			'content' => [
+				'catalogroottag'    => '',
+				'usecatalogroottag' => 'custom',
+			],
+			'id'       => '12345678-90ab-cdef-1234-567890abcdef',
+			'isHidden' => false,
+			'parent'   => $this->app->page('test'),
+			'type'     => 'roomle-configurator'
+		]);
+
+		$this->assertNull($block->catalogRootTag());
+	}
+
+	/**
+	 * @covers ::catalogRootTag
+	 * @covers ::option
+	 */
+	public function testCatalogRootTag_Default()
+	{
+		$block = new ConfiguratorBlock([
+			'content' => [
+				'catalogroottag'    => 'custom-root-tag',
+				'usecatalogroottag' => 'default',
+			],
+			'id'       => '12345678-90ab-cdef-1234-567890abcdef',
+			'isHidden' => false,
+			'parent'   => $this->app->page('test'),
+			'type'     => 'roomle-configurator'
+		]);
+
+		$this->assertSame('default-root-tag', $block->catalogRootTag());
+	}
+
+	/**
+	 * @covers ::catalogRootTag
+	 */
+	public function testCatalogRootTag_None()
+	{
+		$block = new ConfiguratorBlock([
+			'content' => [
+				'catalogroottag'    => 'custom-root-tag',
+				'usecatalogroottag' => 'none',
+			],
+			'id'       => '12345678-90ab-cdef-1234-567890abcdef',
+			'isHidden' => false,
+			'parent'   => $this->app->page('test'),
+			'type'     => 'roomle-configurator'
+		]);
+
+		$this->assertNull($block->catalogRootTag());
 	}
 
 	/**
@@ -225,6 +303,7 @@ class ConfiguratorBlockTest extends TestCase
 				'some' => 'default',
 				'other' => 'default',
 				'id' => 'some:product',
+				'moc' => false,
 			],
 			'targetUrl' => 'https://example.com/default-target'
 		]), $block->frontendJson());
@@ -255,6 +334,7 @@ class ConfiguratorBlockTest extends TestCase
 				'some' => 'default',
 				'other' => 'default',
 				'id' => 'some:product',
+				'moc' => false,
 			],
 			'targetUrl' => 'https://example.com/default-target'
 		], $block->frontendProps());
@@ -396,6 +476,7 @@ class ConfiguratorBlockTest extends TestCase
 			'some' => 'default',
 			'other' => 'default',
 			'id' => 'some:product',
+			'moc' => false,
 		], $block->options());
 	}
 
@@ -430,6 +511,7 @@ class ConfiguratorBlockTest extends TestCase
 			'some' => 'default',
 			'other' => 'default',
 			'id' => 'some:product',
+			'moc' => false,
 		], $block->options());
 	}
 
@@ -465,6 +547,7 @@ class ConfiguratorBlockTest extends TestCase
 			'some' => 'default',
 			'other' => 'default',
 			'id' => 'some:product',
+			'moc' => false,
 		], $block->options());
 	}
 
@@ -495,6 +578,133 @@ class ConfiguratorBlockTest extends TestCase
 	 * @covers ::options
 	 * @covers ::option
 	 */
+	public function testOptions_Moc_CatalogView()
+	{
+		$block = new ConfiguratorBlock([
+			'content' => [
+				'mainproductid'     => 'some:product',
+				'options'           => '',
+				'usetarget'         => 'default',
+				'mode'              => 'room',
+				'initialview'       => 'catalog',
+				'usecatalogroottag' => 'default',
+			],
+			'id'       => '12345678-90ab-cdef-1234-567890abcdef',
+			'isHidden' => false,
+			'parent'   => $this->app->page('test'),
+			'type'     => 'roomle-configurator'
+		]);
+
+		$this->assertSame([
+			'some' => 'default',
+			'other' => 'default',
+			'id' => 'some:product',
+			'moc' => true,
+			'startInDetail' => false,
+			'state' => [
+				'mode' => 'catalog',
+			],
+			'catalogRootTag' => 'default-root-tag',
+		], $block->options());
+	}
+
+	/**
+	 * @covers ::options
+	 * @covers ::option
+	 */
+	public function testOptions_Moc_Defaults()
+	{
+		$block = new ConfiguratorBlock([
+			'content' => [
+				'mainproductid'     => 'some:product',
+				'options'           => '',
+				'usetarget'         => 'default',
+				'mode'              => 'room',
+				'usecatalogroottag' => 'default',
+			],
+			'id'       => '12345678-90ab-cdef-1234-567890abcdef',
+			'isHidden' => false,
+			'parent'   => $this->app->page('test'),
+			'type'     => 'roomle-configurator'
+		]);
+
+		$this->assertSame([
+			'some' => 'default',
+			'other' => 'default',
+			'id' => 'some:product',
+			'moc' => true,
+			'startInDetail' => true,
+			'catalogRootTag' => 'default-root-tag',
+		], $block->options());
+	}
+
+	/**
+	 * @covers ::options
+	 * @covers ::option
+	 */
+	public function testOptions_Moc_NoCatalog()
+	{
+		$block = new ConfiguratorBlock([
+			'content' => [
+				'mainproductid'     => 'some:product',
+				'options'           => '',
+				'usetarget'         => 'default',
+				'mode'              => 'room',
+				'usecatalogroottag' => 'none',
+			],
+			'id'       => '12345678-90ab-cdef-1234-567890abcdef',
+			'isHidden' => false,
+			'parent'   => $this->app->page('test'),
+			'type'     => 'roomle-configurator'
+		]);
+
+		$this->assertSame([
+			'some' => 'default',
+			'other' => 'default',
+			'id' => 'some:product',
+			'moc' => true,
+			'startInDetail' => true,
+		], $block->options());
+	}
+
+	/**
+	 * @covers ::options
+	 * @covers ::option
+	 */
+	public function testOptions_Moc_RoomView()
+	{
+		$block = new ConfiguratorBlock([
+			'content' => [
+				'mainproductid'     => 'some:product',
+				'options'           => '',
+				'usetarget'         => 'default',
+				'mode'              => 'room',
+				'initialview'       => 'room',
+				'usecatalogroottag' => 'default',
+			],
+			'id'       => '12345678-90ab-cdef-1234-567890abcdef',
+			'isHidden' => false,
+			'parent'   => $this->app->page('test'),
+			'type'     => 'roomle-configurator'
+		]);
+
+		$this->assertSame([
+			'some' => 'default',
+			'other' => 'default',
+			'id' => 'some:product',
+			'moc' => true,
+			'startInDetail' => false,
+			'state' => [
+				'mode' => 'room',
+			],
+			'catalogRootTag' => 'default-root-tag',
+		], $block->options());
+	}
+
+	/**
+	 * @covers ::options
+	 * @covers ::option
+	 */
 	public function testOptions_NoTarget()
 	{
 		$block = new ConfiguratorBlock([
@@ -514,9 +724,11 @@ class ConfiguratorBlockTest extends TestCase
 			'other' => 'default',
 			'buttons' => [
 				'add_to_basket' => false,
+				'requestplan' => false,
 				'requestproduct' => false,
 			],
 			'id' => 'some:product',
+			'moc' => false,
 		], $block->options());
 	}
 
@@ -529,7 +741,7 @@ class ConfiguratorBlockTest extends TestCase
 		$block = new ConfiguratorBlock([
 			'content' => [
 				'mainproductid' => 'some:product',
-				'options'       => "some: custom value\nskin:\n  primary-color: '#123456'\nid: should not be used",
+				'options'       => "some: custom value\nskin:\n  primary-color: '#123456'\nid: should not be used\nmoc: true",
 				'usetarget'     => 'default'
 			],
 			'id'       => '12345678-90ab-cdef-1234-567890abcdef',
@@ -545,6 +757,7 @@ class ConfiguratorBlockTest extends TestCase
 				'primary-color' => '#123456'
 			],
 			'id' => 'some:product',
+			'moc' => false,
 		], $block->options());
 	}
 

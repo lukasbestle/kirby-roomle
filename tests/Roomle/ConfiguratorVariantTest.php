@@ -143,4 +143,26 @@ class ConfiguratorVariantTest extends TestCase
 		$this->assertInstanceOf(Image::class, $image);
 		$this->assertSame('https://www.roomle.com/api/v2/items/some:variant/perspectiveImageHD', $image->url());
 	}
+
+	/**
+	 * @covers ::image
+	 */
+	public function testImage_Plan()
+	{
+		$variant = new ConfiguratorVariant([
+			'content' => [
+				'productid' => 'abcdefghi',
+				'title'     => 'Some variant',
+				'subtitle'  => 'for cool people',
+				'image'     => []
+			],
+			'id'     => 0,
+			'parent' => $this->app->page('test')
+		]);
+
+		$image = $variant->image();
+
+		$this->assertInstanceOf(Image::class, $image);
+		$this->assertSame('https://uploads.roomle.com/plans/abcdefghi/thumbnail.png', $image->url());
+	}
 }

@@ -15,7 +15,7 @@ class ConfigurationTest extends TestCase
 		new App([
 			'request' => [
 				'body' => [
-					'roomle-configuration' => '{"depth": 123}'
+					'roomle-configuration' => '{"id": null, "items": [{"depth": 123}]}'
 				]
 			],
 			'urls' => [
@@ -51,7 +51,6 @@ class ConfigurationTest extends TestCase
 	}
 
 	/**
-	 * @covers ::__construct
 	 * @covers ::lazyInstance
 	 */
 	public function testConstruct_Array()
@@ -68,20 +67,15 @@ class ConfigurationTest extends TestCase
 	}
 
 	/**
-	 * @covers ::__construct
 	 * @covers ::lazyInstance
 	 */
 	public function testConstruct_Request()
 	{
-		$configuration = new Configuration();
-		$this->assertSame(123, $configuration->depth());
-
 		$configuration = Configuration::lazyInstance();
 		$this->assertSame(123, $configuration->depth());
 	}
 
 	/**
-	 * @covers ::__construct
 	 * @covers ::lazyInstance
 	 */
 	public function testConstruct_RequestInvalid()
@@ -90,38 +84,23 @@ class ConfigurationTest extends TestCase
 		new App();
 
 		$this->assertNull(Configuration::lazyInstance());
-
-		$this->expectException('Kirby\Exception\InvalidArgumentException');
-		$this->expectExceptionMessage('No configuration data passed or available in request');
-
-		new Configuration();
 	}
 
 	/**
-	 * @covers ::__construct
 	 * @covers ::lazyInstance
 	 */
 	public function testConstruct_String()
 	{
-		$configuration = new Configuration('{"depth": 1337}');
-		$this->assertSame(1337, $configuration->depth());
-
-		$configuration = Configuration::lazyInstance('{"depth": 1337}');
+		$configuration = Configuration::lazyInstance('{"items": [{"depth": 1337}]}');
 		$this->assertSame(1337, $configuration->depth());
 	}
 
 	/**
-	 * @covers ::__construct
 	 * @covers ::lazyInstance
 	 */
 	public function testConstruct_StringInvalid()
 	{
 		$this->assertNull(Configuration::lazyInstance('Definitely not JSON'));
-
-		$this->expectException('Kirby\Exception\InvalidArgumentException');
-		$this->expectExceptionMessage('JSON string is invalid');
-
-		new Configuration('Definitely not JSON');
 	}
 
 	/**

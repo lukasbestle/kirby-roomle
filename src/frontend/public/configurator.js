@@ -54,7 +54,9 @@ export default class {
 		).href.replace(this.props.htmlId + "-PLACEHOLDER", "#CONFIGURATIONID#");
 
 		// initialize the configured or passed product
-		this.configurator = await RoomleConfiguratorApi.createConfigurator(
+		const initMethod =
+			options.moc === true ? "createPlanner" : "createConfigurator";
+		this.configurator = await RoomleConfiguratorApi[initMethod](
 			this.props.configuratorId,
 			document.getElementById(this.props.htmlId + "-container"),
 			options
@@ -65,11 +67,40 @@ export default class {
 			this.load(this.currentId);
 		}
 
-		// handle the "request product" interaction
+		// handle the "add to cart"/"request product"/"request plan" interaction
 		if (this.props.targetUrl) {
+			this.configurator.ui.callbacks.onRequestPlan =
+				this.onRequestPlan.bind(this);
+
 			this.configurator.ui.callbacks.onRequestProduct =
 				this.onRequestProduct.bind(this);
 		}
+	}
+
+	/**
+	 * Combines the raw objects from the Roomle API to a
+	 * single reduced object with the necessary data
+	 * that will be used on the backend
+	 *
+	 * @param {RapiConfigurationEnhanced} configuration The data returned from the Roomle backend
+	 * @param {KernelPartList} partlist The part list with all details, grouped, etc.
+	 * @param {String} id ID of the configuration
+	 * @returns {Object}
+	 */
+	configurationToObject(configuration, partlist, id) {
+		return {
+			catalog: configuration.catalog,
+			configuratorUrl: this.idToUrl(id, true),
+			depth: configuration.depth,
+			height: configuration.height,
+			id: id,
+			label: configuration.label,
+			parts: partlist.fullList,
+			perspectiveImage: configuration.perspectiveImage,
+			rootComponentId: configuration.rootComponentId,
+			topImage: configuration.topImage,
+			width: configuration.width
+		};
 	}
 
 	/**
@@ -121,6 +152,28 @@ export default class {
 	}
 
 	/**
+	 * Handles the user clicking the "request plan" button
+	 * in the configurator
+	 *
+	 * @param {String} planId ID of the current plan
+	 * @param {Base64Image} image Image of the current plan
+	 * @param {any[]} items The list of all items in the plan with part details
+	 */
+	onRequestPlan(planId, image, items) {
+		// clean up each item
+		items = items.map((item) =>
+			this.configurationToObject(item.data, item.parts, item.configurationHash)
+		);
+
+		this.submit({
+			configuratorUrl: this.idToUrl(planId, true),
+			id: planId,
+			items: items,
+			thumbnail: "https://uploads.roomle.com/plans/" + planId + "/thumbnail.png"
+		});
+	}
+
+	/**
 	 * Handles the user clicking the "request product" button
 	 * in the configurator
 	 *
@@ -139,33 +192,19 @@ export default class {
 		labels,
 		configuration
 	) {
-		const data = {
-			catalog: configuration.catalog,
+		// combine and clean up the configuration object
+		configuration = this.configurationToObject(
+			configuration,
+			partlist,
+			configurationId
+		);
+
+		this.submit({
 			configuratorUrl: this.idToUrl(configurationId, true),
-			depth: configuration.depth,
-			height: configuration.height,
-			id: configurationId,
-			label: configuration.label,
-			parts: partlist.fullList,
-			perspectiveImage: configuration.perspectiveImage,
-			rootComponentId: configuration.rootComponentId,
-			topImage: configuration.topImage,
-			width: configuration.width
-		};
-
-		// submit the data as a POST request to the target
-		const form = document.createElement("form");
-		form.action = this.props.targetUrl;
-		form.method = "POST";
-		form.style.display = "none";
-
-		const input = document.createElement("input");
-		input.name = "roomle-configuration";
-		input.value = JSON.stringify(data);
-		form.appendChild(input);
-
-		document.body.appendChild(form);
-		form.submit();
+			id: null,
+			items: [configuration],
+			thumbnail: configuration.perspectiveImage
+		});
 	}
 
 	/**
@@ -193,6 +232,26 @@ export default class {
 		window.history.pushState(null, "", url);
 
 		this.load(event.target.value);
+	}
+
+	/**
+	 * Handles the POST submission to the target URL
+	 *
+	 * @param {Object} data
+	 */
+	submit(data) {
+		const form = document.createElement("form");
+		form.action = this.props.targetUrl;
+		form.method = "POST";
+		form.style.display = "none";
+
+		const input = document.createElement("input");
+		input.name = "roomle-configuration";
+		input.value = JSON.stringify(data);
+		form.appendChild(input);
+
+		document.body.appendChild(form);
+		form.submit();
 	}
 
 	/**

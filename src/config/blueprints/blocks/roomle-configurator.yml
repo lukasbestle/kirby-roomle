@@ -6,17 +6,20 @@ label:
   en: "{{ mainproductid }} · {{ variants.length }} variant(s)"
   de: "{{ mainproductid }} · {{ variants.length }} Variante(n)"
 tabs:
-  products:
+  views:
     label:
-      en: Products
-      de: Produkte
+      en: Views
+      de: Ansichten
     fields:
       mainProductId:
         label:
-          en: Main product ID
-          de: Hauptprodukt-ID
+          en: ID of the main view
+          de: ID der Hauptansicht
         type: text
         counter: false
+        help:
+          en: Can be an item, configuration or plan ID (plan ID only in room mode)
+          de: Kann eine Produkt-, Konfigurations- oder Plan-ID sein (Plan-ID nur im Raum-Modus)
         icon: box
         required: true
       variants:
@@ -37,8 +40,8 @@ tabs:
         fields:
           productId:
             label:
-              en: Product ID
-              de: Produkt-ID
+              en: ID
+              de: ID
             type: text
             icon: box
             counter: false
@@ -66,10 +69,99 @@ tabs:
               de: Noch kein eigenes Bild, verwendet Rendering des Produkts
             multiple: false
             query: page.images
-  settings:
+  Behavior:
     label:
-      en: Settings
-      de: Einstellungen
+      en: Behavior
+      de: Verhalten
+    fields:
+      mode:
+        label:
+          en: Configuration mode
+          de: Konfigurations-Modus
+        type: toggles
+        default: product
+        options:
+          -
+            icon: cog
+            text:
+              en: Product
+              de: Produkt
+            value: product
+          -
+            icon: home
+            text:
+              en: Room (multi-object configurator)
+              de: Raum (Multi-Objekt-Konfigurator)
+            value: room
+        required: true
+      initialView:
+        label:
+          en: Initial view
+          de: Initiale Ansicht
+        type: toggles
+        default: detail
+        options:
+          -
+            text:
+              en: Detail view
+              de: Detailansicht
+            value: detail
+          -
+            text:
+              en: Room/Drawing view
+              de: Raumansicht/Zeichenmodus
+            value: room
+          -
+            text:
+              en: Catalog view
+              de: Katalogansicht
+            value: catalog
+        required: true
+        when:
+          mode: room
+      useCatalogRootTag:
+        label:
+          en: Catalog
+          de: Katalog
+        type: toggles
+        default: default
+        grow: false
+        options:
+          -
+            text:
+              en: Default
+              de: Standard
+            value: default
+          -
+            text:
+              en: Custom
+              de: Eigener
+            value: custom
+          -
+            icon: cancel
+            text:
+              en: None
+              de: Keiner
+            value: none
+        required: true
+        when:
+          mode: room
+        width: 1/3
+      catalogRootTag:
+        label:
+          en: Custom catalog root tag
+          de: Eigener Stamm-Tag für den Katalog
+        type: text
+        counter: false
+        icon: tag
+        width: 2/3
+        when:
+          mode: room
+          useCatalogRootTag: custom
+  advanced:
+    label:
+      en: Advanced
+      de: Erweitert
     fields:
       info:
         label: false

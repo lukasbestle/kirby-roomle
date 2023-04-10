@@ -30,12 +30,22 @@ class ConfiguratorVariant extends StructureObject
 			return $image;
 		}
 
-		// more than two colons = configuration, else item
 		$productId = $this->content()->productId()->value();
-		if (count(explode(':', $productId)) > 2) {
-			$url = 'https://uploads.roomle.com/configurations/' . $productId . '/perspectiveImage.png';
-		} else {
-			$url = 'https://www.roomle.com/api/v2/items/' . $productId . '/perspectiveImageHD';
+
+		$url = null;
+		switch (count(explode(':', $productId))) {
+			case 1:
+				// no colons; plan ID
+				$url = 'https://uploads.roomle.com/plans/' . $productId . '/thumbnail.png';
+				break;
+			case 2:
+				// one colon; item ID
+				$url = 'https://www.roomle.com/api/v2/items/' . $productId . '/perspectiveImageHD';
+				break;
+			case 3:
+				// two colons; configuration ID
+				$url = 'https://uploads.roomle.com/configurations/' . $productId . '/perspectiveImage.png';
+				break;
 		}
 
 		return new Image(compact('url'));
