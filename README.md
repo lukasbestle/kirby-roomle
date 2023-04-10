@@ -12,7 +12,7 @@
 
 ## Support my work
 
-> The Roomle plugin is completely free and published under the terms of the MIT license. I do not sell licenses or accept donations, but I'm available for contract work regarding feature development for this plugin.  
+> The Roomle plugin is completely free and published under the terms of the MIT license. I do not sell licenses or accept donations, but I'm available for contract work regarding feature development for this plugin.
 > ➯ [Read more…](.github/CONTRIBUTING.md#monetary-support)
 
 ## About this plugin
@@ -24,6 +24,7 @@ This Kirby plugin allows you to easily embed the Rubens configurator into your K
 ## Features
 
 - Customizable variant switcher for different suggested configuration variants
+- Support for the multi-object configurator to plan whole rooms
 - Automatic handling of the product configuration data for integration in contact forms or shops
 - Deeplink generation to allow sharing/bookmarking a specific configuration draft
 - Automatic language control based on the site language (only in multilang installations)
