@@ -130,6 +130,7 @@ class ConfiguratorBlock extends Block
 		// no point displaying the "request product" button
 		// if no target page was configured
 		if ($this->targetUrl() === null) {
+			$defaults['buttons']['add_to_basket']  = false;
 			$defaults['buttons']['requestproduct'] = false;
 		}
 

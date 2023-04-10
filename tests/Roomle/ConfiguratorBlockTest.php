@@ -511,7 +511,8 @@ class ConfiguratorBlockTest extends TestCase
 
 		$this->assertSame([
 			'buttons' => [
-				'requestproduct' => false
+				'add_to_basket' => false,
+				'requestproduct' => false,
 			],
 			'some' => 'default',
 			'other' => 'default',
