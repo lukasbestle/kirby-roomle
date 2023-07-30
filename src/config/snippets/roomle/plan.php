@@ -2,6 +2,6 @@
 <?= $plan->label() ?> (<?= $plan->id() ?>)
 <?= $plan->configuratorUrl() . "\n" ?>
 
-<?php foreach ($plan->items() as $item): ?>
+<?php foreach ($plan->groupedItems() as $item): ?>
 <?= $item . "\n" ?>
 <?php endforeach ?>

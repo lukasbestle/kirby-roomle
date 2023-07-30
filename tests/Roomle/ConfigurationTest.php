@@ -250,4 +250,61 @@ class ConfigurationTest extends TestCase
 
 		$this->assertStringEqualsFile(__DIR__ . '/fixtures/configuration.txt', (string)$configuration);
 	}
+
+	/**
+	 * @covers ::__toString
+	 */
+	public function testToString_WithCount()
+	{
+		$configuration = new Configuration([
+			'configuratorUrl' => 'https://example.com/configurator',
+			'count'           => 3,
+			'depth'           => 12,
+			'height'          => 34,
+			'id'              => 'some:id',
+			'label'           => 'Some product',
+			'width'           => 56,
+			'parts'           => [
+				[
+					'articleNr'   => '123.456.789',
+					'componentId' => 'some:component1',
+					'count'       => 2,
+					'label'       => 'Some part',
+					'parameters'  => [
+						[
+							'key'        => 'height',
+							'label'      => 'Height',
+							'type'       => 'Decimal',
+							'unitType'   => 'length',
+							'value'      => '123.0'
+						],
+						[
+							'key'        => 'width',
+							'label'      => 'Width',
+							'type'       => 'Decimal',
+							'unitType'   => 'length',
+							'value'      => '456.0'
+						]
+					]
+				],
+				[
+					'articleNr'   => '987.654.321',
+					'componentId' => 'some:component2',
+					'count'       => 1,
+					'label'       => 'Some other part',
+					'parameters'  => [
+						[
+							'key'        => 'height',
+							'label'      => 'Height',
+							'type'       => 'Decimal',
+							'unitType'   => 'length',
+							'value'      => '789.0'
+						]
+					]
+				]
+			],
+		]);
+
+		$this->assertStringEqualsFile(__DIR__ . '/fixtures/configuration_count.txt', (string)$configuration);
+	}
 }

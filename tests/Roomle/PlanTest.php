@@ -435,7 +435,54 @@ class PlanTest extends TestCase
 							]
 						]
 					]
-				]
+				],
+				[
+					'configuratorUrl' => 'https://example.com/configurator/item1',
+					'depth'           => 12,
+					'height'          => 34,
+					'id'              => 'some:id1',
+					'label'           => 'Some product',
+					'width'           => 56,
+					'parts'           => [
+						[
+							'articleNr'   => '123.456.789',
+							'componentId' => 'some:component1',
+							'count'       => 2,
+							'label'       => 'Some part',
+							'parameters'  => [
+								[
+									'key'        => 'height',
+									'label'      => 'Height',
+									'type'       => 'Decimal',
+									'unitType'   => 'length',
+									'value'      => '123.0'
+								],
+								[
+									'key'        => 'width',
+									'label'      => 'Width',
+									'type'       => 'Decimal',
+									'unitType'   => 'length',
+									'value'      => '456.0'
+								]
+							]
+						],
+						[
+							'articleNr'   => '987.654.321',
+							'componentId' => 'some:component2',
+							'count'       => 1,
+							'label'       => 'Some other part',
+							'parameters'  => [
+								[
+									'key'        => 'height',
+									'label'      => 'Height',
+									'type'       => 'Decimal',
+									'unitType'   => 'length',
+									'value'      => '789.0'
+								]
+							]
+						]
+					]
+				],
 			]
 		]);
 
