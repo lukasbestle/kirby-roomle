@@ -104,6 +104,27 @@ class Plan extends Obj
 	}
 
 	/**
+	 * Returns the list of items with duplicates
+	 * merged to a single item including the count
+	 *
+	 * @throws \Kirby\Exception\InvalidArgumentException if a part in the raw data is not an array
+	 */
+	public function groupedItems(): Collection
+	{
+		$groupedItems = [];
+		foreach ($this->items() as $item) {
+			if (isset($groupedItems[$item->id]) === true) {
+				$groupedItems[$item->id]->count++;
+			} else {
+				$groupedItems[$item->id] = $item;
+				$groupedItems[$item->id]->count = 1;
+			}
+		}
+
+		return new Collection($groupedItems);
+	}
+
+	/**
 	 * Checks if the configuration has a plan ID
 	 */
 	public function hasId(): bool

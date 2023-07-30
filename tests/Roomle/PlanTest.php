@@ -125,6 +125,53 @@ class PlanTest extends TestCase
 	}
 
 	/**
+	 * @covers ::groupedItems
+	 */
+	public function testGroupedItems()
+	{
+		$plan = new Plan([
+			'items' => [
+				[
+					'id'    => 'some:item1',
+					'depth' => 123
+				],
+				[
+					'id'    => 'some:item2',
+					'depth' => 234
+				],
+				[
+					'id'    => 'some:item1',
+					'depth' => 123
+				]
+			]
+		]);
+
+		$items = $plan->groupedItems();
+
+		$this->assertSame(2, $items->count());
+		$this->assertSame(['some:item1', 'some:item2'], $items->pluck('id'));
+		$this->assertInstanceOf(Configuration::class, $items->first());
+		$this->assertSame(123, $items->first()->depth());
+	}
+
+	/**
+	 * @covers ::groupedItems
+	 */
+	public function testGroupedItems_Invalid()
+	{
+		$this->expectException('Kirby\Exception\InvalidArgumentException');
+		$this->expectExceptionMessage('Invalid item 0');
+
+		$plan = new Plan([
+			'items' => [
+				'not an array'
+			]
+		]);
+
+		$plan->groupedItems();
+	}
+
+	/**
 	 * @covers ::hasId
 	 */
 	public function testHasId_Missing()
@@ -158,8 +205,8 @@ class PlanTest extends TestCase
 					'depth' => 234
 				],
 				[
-					'id'    => 'some:item3',
-					'depth' => 345
+					'id'    => 'some:item1',
+					'depth' => 123
 				]
 			]
 		]);
@@ -167,7 +214,7 @@ class PlanTest extends TestCase
 		$items = $plan->items();
 
 		$this->assertSame(3, $items->count());
-		$this->assertSame(['some:item1', 'some:item2', 'some:item3'], $items->pluck('id'));
+		$this->assertSame(['some:item1', 'some:item2', 'some:item1'], $items->pluck('id'));
 		$this->assertInstanceOf(Configuration::class, $items->first());
 		$this->assertSame(123, $items->first()->depth());
 	}

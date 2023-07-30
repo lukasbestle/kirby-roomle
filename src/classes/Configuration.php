@@ -36,6 +36,12 @@ class Configuration extends Obj
 	public string $configuratorUrl;
 
 	/**
+	 * Count of the same item in a plan
+	 * (only set by `$plan->groupedItems()`)
+	 */
+	public int|null $count = null;
+
+	/**
 	 * Depth of the configured product in mm
 	 */
 	public int $depth;
