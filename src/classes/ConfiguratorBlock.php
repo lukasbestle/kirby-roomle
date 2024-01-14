@@ -2,6 +2,7 @@
 
 namespace LukasBestle\Roomle;
 
+use Kirby\Cms\App;
 use Kirby\Cms\Block;
 use Kirby\Cms\Page;
 use Kirby\Cms\Structure;
@@ -209,8 +210,17 @@ class ConfiguratorBlock extends Block
 	 */
 	public function variants(): Structure
 	{
-		$field     = $this->content()->variants();
-		$structure = new Structure([], $field->parent());
+		$field = $this->content()->variants();
+
+		// TODO: Always use array options once support for Kirby 3 is dropped;
+		//       Psalm suppression can be removed then
+		$options = ['parent' => $field->parent()];
+		if (version_compare(App::version() ?? '4.0.0', '4.0.0-alpha.4', '<') === true) {
+			$options = $options['parent'];
+		}
+
+		/** @psalm-suppress PossiblyInvalidArgument */
+		$structure = new Structure([], $options);
 
 		foreach ($field->value() as $id => $props) {
 			$variant = new ConfiguratorVariant([
