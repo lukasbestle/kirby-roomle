@@ -1,4 +1,4 @@
-# Roomle for Kirby 3
+# Roomle for Kirby
 
 [![Kirby 3.7.0+](https://img.shields.io/badge/Kirby-3.7.0%2B-green)](https://getkirby.com)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
@@ -32,8 +32,8 @@ This Kirby plugin allows you to easily embed the Rubens configurator into your K
 
 ## Requirements
 
-- Kirby 3.7.0+
-- PHP 8.0+
+- Kirby 3.7.0+ or 4.0.0+
+- PHP 8.1+
 
 ## Documentation
 
