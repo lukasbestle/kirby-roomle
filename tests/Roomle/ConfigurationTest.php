@@ -111,16 +111,23 @@ class ConfigurationTest extends TestCase
 		$configuration = new Configuration([
 			'parts' => [
 				[
+					'articleNr'   => '12345',
 					'componentId' => 'some:component1',
 					'label'       => 'Some component 1'
 				],
 				[
+					'articleNr'   => '12345',
 					'componentId' => 'some:component1',
 					'label'       => 'Some component 1 with different properties'
 				],
 				[
+					'articleNr'   => '23456',
 					'componentId' => 'some:component2',
 					'label'       => 'Some component 2'
+				],
+				[
+					'componentId' => 'some:component3',
+					'label'       => 'Some component 3 without article number'
 				]
 			]
 		]);

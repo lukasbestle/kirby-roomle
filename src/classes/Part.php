@@ -94,6 +94,11 @@ class Part extends Obj
 				throw new InvalidArgumentException('Invalid parameter ' . $num);
 			}
 
+			// skip dummy parameters
+			if (is_string($parameter['value'] ?? null) !== true) {
+				continue;
+			}
+
 			$parameter = new Parameter($parameter);
 
 			// double-check uninitialized property before access (normally should not happen);

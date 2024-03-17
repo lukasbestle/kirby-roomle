@@ -66,6 +66,10 @@ class PartTest extends TestCase
 					'type'     => 'Decimal',
 					'unitType' => 'length',
 					'value'    => '456.0'
+				],
+				[
+					'key'      => 'internal',
+					'label'    => 'Internal parameter without value'
 				]
 			]
 		]);
@@ -106,7 +110,8 @@ class PartTest extends TestCase
 		$part = new Part([
 			'parameters' => [
 				[
-					'label' => 'Some parameter without key'
+					'label' => 'Some parameter without key',
+					'value' => '123'
 				]
 			]
 		]);

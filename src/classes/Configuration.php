@@ -147,6 +147,11 @@ class Configuration extends Obj
 				throw new InvalidArgumentException('Invalid part ' . $num);
 			}
 
+			// skip dummy parts
+			if (is_string($part['articleNr'] ?? null) !== true) {
+				continue;
+			}
+
 			$parts[] = new Part($part);
 		}
 
