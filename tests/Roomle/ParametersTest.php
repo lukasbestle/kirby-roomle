@@ -9,6 +9,11 @@ use PHPUnit\Framework\TestCase;
  */
 class ParametersTest extends TestCase
 {
+	public function setUp(): void
+	{
+		locale_set_default('en_US');
+	}
+
 	/**
 	 * @coversNothing
 	 */

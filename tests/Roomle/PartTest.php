@@ -2,6 +2,7 @@
 
 namespace LukasBestle\Roomle;
 
+use Kirby\Cms\App;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -11,6 +12,8 @@ class PartTest extends TestCase
 {
 	public function setUp(): void
 	{
+		new App();
+
 		locale_set_default('en_US');
 	}
 
