@@ -146,6 +146,11 @@ class Plan extends Obj
 				throw new InvalidArgumentException('Invalid item ' . $num);
 			}
 
+			// skip dummy items (e.g. radiator from the room designer)
+			if (is_string($item['id'] ?? null) !== true) {
+				continue;
+			}
+
 			$items[] = new Configuration($item);
 		}
 

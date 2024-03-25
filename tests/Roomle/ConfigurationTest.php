@@ -15,7 +15,7 @@ class ConfigurationTest extends TestCase
 		new App([
 			'request' => [
 				'body' => [
-					'roomle-configuration' => '{"id": null, "items": [{"depth": 123}]}'
+					'roomle-configuration' => '{"id": null, "items": [{"id": "some-id", "depth": 123}]}'
 				]
 			],
 			'urls' => [
@@ -56,11 +56,13 @@ class ConfigurationTest extends TestCase
 	public function testConstruct_Array()
 	{
 		$configuration = new Configuration([
+			'id'    => 'some-id',
 			'depth' => 1337
 		]);
 		$this->assertSame(1337, $configuration->depth());
 
 		$configuration = Configuration::lazyInstance([
+			'id'    => 'some-id',
 			'depth' => 1337
 		]);
 		$this->assertSame(1337, $configuration->depth());
@@ -91,7 +93,7 @@ class ConfigurationTest extends TestCase
 	 */
 	public function testConstruct_String()
 	{
-		$configuration = Configuration::lazyInstance('{"items": [{"depth": 1337}]}');
+		$configuration = Configuration::lazyInstance('{"items": [{"id": "some-id", "depth": 1337}]}');
 		$this->assertSame(1337, $configuration->depth());
 	}
 

@@ -142,6 +142,10 @@ class PlanTest extends TestCase
 				[
 					'id'    => 'some:item1',
 					'depth' => 123
+				],
+				[
+					'id'    => null,
+					'label' => 'Radiator'
 				]
 			]
 		]);
@@ -207,6 +211,10 @@ class PlanTest extends TestCase
 				[
 					'id'    => 'some:item1',
 					'depth' => 123
+				],
+				[
+					'id'    => null,
+					'label' => 'Radiator'
 				]
 			]
 		]);
