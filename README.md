@@ -32,8 +32,8 @@ This Kirby plugin allows you to easily embed the Rubens configurator into your K
 
 ## Requirements
 
-- Kirby 3.7.0+ or 4.0.0+
-- PHP 8.1+
+- Kirby 3.7+, Kirby 4 or Kirby 5
+- PHP 8.2+
 
 ## Documentation
 
