@@ -15,6 +15,7 @@ use Kirby\Toolkit\Collection;
  * @license   https://opensource.org/licenses/MIT
  *
  * @psalm-suppress PropertyNotSetInConstructor
+ * @extends \Kirby\Toolkit\Collection<\LukasBestle\Roomle\Parameter>
  */
 class Parameters extends Collection
 {

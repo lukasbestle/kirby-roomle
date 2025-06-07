@@ -138,6 +138,7 @@ class Configuration extends Obj
 	 * of the configuration as an object structure
 	 *
 	 * @throws \Kirby\Exception\InvalidArgumentException if a part in the raw data is not an array
+	 * @return \Kirby\Toolkit\Collection<\LukasBestle\Roomle\Part>
 	 */
 	public function parts(): Collection
 	{
@@ -155,6 +156,12 @@ class Configuration extends Obj
 			$parts[] = new Part($part);
 		}
 
+		/**
+		 * Collections expect string keys which we cannot provide as
+		 * each part can occur multiple times in the configuration,
+		 * so we cannot index them by their ID
+		 * @psalm-suppress InvalidArgument
+		 */
 		return new Collection($parts);
 	}
 

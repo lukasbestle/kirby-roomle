@@ -108,6 +108,7 @@ class Plan extends Obj
 	 * merged to a single item including the count
 	 *
 	 * @throws \Kirby\Exception\InvalidArgumentException if a part in the raw data is not an array
+	 * @return \Kirby\Toolkit\Collection<\LukasBestle\Roomle\Configuration>
 	 */
 	public function groupedItems(): Collection
 	{
@@ -137,6 +138,7 @@ class Plan extends Obj
 	 * of the configuration as an object structure
 	 *
 	 * @throws \Kirby\Exception\InvalidArgumentException if a part in the raw data is not an array
+	 * @return \Kirby\Toolkit\Collection<\LukasBestle\Roomle\Configuration>
 	 */
 	public function items(): Collection
 	{
@@ -154,6 +156,12 @@ class Plan extends Obj
 			$items[] = new Configuration($item);
 		}
 
+		/**
+		 * Collections expect string keys which we cannot provide as
+		 * each item can occur multiple times in the plan, so we cannot
+		 * index them by their ID
+		 * @psalm-suppress InvalidArgument
+		 */
 		return new Collection($items);
 	}
 
