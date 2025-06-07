@@ -96,7 +96,7 @@ class Plan extends Obj
 	{
 		$homeUrl = App::instance()->url('index');
 
-		if ($homeUrl && Str::startsWith($this->configuratorUrl, $homeUrl) === true) {
+		if (is_string($homeUrl) && $homeUrl !== '' && Str::startsWith($this->configuratorUrl, $homeUrl) === true) {
 			return $this->configuratorUrl;
 		}
 

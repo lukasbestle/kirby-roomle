@@ -34,7 +34,7 @@ class ConfiguratorBlock extends Block
 			default   => null
 		};
 
-		if (!$tag) {
+		if ($tag === null || $tag === '') {
 			return null;
 		}
 
